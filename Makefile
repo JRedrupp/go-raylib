@@ -9,7 +9,11 @@ shapes_bouncing_ball: ./src/examples/shapes/shapes_bouncing_ball/shapes_bouncing
 shapes_basic_shapes: ./src/examples/shapes/shapes_basic_shapes/shapes_basic_shapes.go c_raylib
 	go build -o ./bin/examples/shapes/shapes_basic_shapes ./src/examples/shapes/shapes_basic_shapes/shapes_basic_shapes.go
 
-shapes: shapes_rectangle_scaling shapes_basic_shapes shapes_bouncing_ball
+shapes_collision_area: ./src/examples/shapes/shapes_collision_area/shapes_collision_area.go c_raylib
+	go build -o ./bin/examples/shapes/shapes_collision_area ./src/examples/shapes/shapes_collision_area/shapes_collision_area.go
+
+
+shapes: shapes_rectangle_scaling shapes_basic_shapes shapes_bouncing_ball shapes_collision_area
 
 c_raylib: $(shell find raylib/src -type f \( -iname \*.c -o -iname \*.h \))
 	cd ./raylib/src ;\

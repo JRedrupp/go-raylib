@@ -7,7 +7,10 @@ package raylib
 #include "raylib.h"
 */
 import "C"
-import "unsafe"
+import (
+	"fmt"
+	"unsafe"
+)
 
 // InitWindow - Initialize window and OpenGL context
 func InitWindow(width int32, height int32, title string) {
@@ -60,6 +63,42 @@ type Rectangle struct {
 
 func (r Rectangle) c() C.struct_Rectangle {
 	return C.struct_Rectangle{C.float(r.X), C.float(r.Y), C.float(r.Width), C.float(r.Height)}
+}
+
+// RLAPI int GetMouseX(void);                                    // Get mouse position X
+func GetMouseX() int32 {
+	return int32(C.GetMouseX())
+}
+
+// RLAPI int GetMouseY(void);                                    // Get mouse position Y
+func GetMouseY() int32 {
+	return int32(C.GetMouseY())
+}
+
+// RLAPI bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                           // Check collision between two rectangles
+func CheckCollisionRecs(rec1 Rectangle, rec2 Rectangle) bool {
+	return bool(C.CheckCollisionRecs(rec1.c(), rec2.c()))
+}
+
+// RLAPI Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2);                                         // Get collision rectangle for two rectangles collision
+func GetCollisionRec(rec1 Rectangle, rec2 Rectangle) Rectangle {
+	rec := C.GetCollisionRec(rec1.c(), rec2.c())
+	return Rectangle{float32(rec.x), float32(rec.y), float32(rec.width), float32(rec.height)}
+}
+
+// RLAPI int MeasureText(const char *text, int fontSize);                                      // Measure string width for default font
+func MeasureText(text string, fontSize int32) int32 {
+	cText := C.CString(text)
+	defer C.free(unsafe.Pointer(cText))
+
+	return int32(C.MeasureText(cText, C.int(fontSize)))
+}
+
+// RLAPI const char *TextFormat(const char *text, ...);                                        // Text formatting with variables (sprintf() style)
+func TextFormat(text string, args ...interface{}) string {
+	// For now just use fmt.Sprintf
+	return fmt.Sprintf(text, args...)
+
 }
 
 type ConfigFlags int
