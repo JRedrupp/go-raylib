@@ -7,7 +7,7 @@ Bindings for the raylib game development library for the Go programming language
 1. Clone the repository
 2. Run Makefile:
 ```bash
-make
+make all
 ```
 3. Run the example:
 ```bash

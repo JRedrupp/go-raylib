@@ -1,6 +1,6 @@
 package main
 
-import "github.com/JRedrupp/go-snake/src/raylib"
+import "github.com/JRedrupp/go-raylib/src/raylib"
 
 func main() {
 	// Initialization
