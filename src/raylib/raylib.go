@@ -268,6 +268,11 @@ func IsKeyPressed(key KeyboardKey) bool {
 	return bool(C.IsKeyPressed(C.int(key)))
 }
 
+// RLAPI bool IsKeyDown(int key);                                // Check if a key is being pressed
+func IsKeyDown(key KeyboardKey) bool {
+	return bool(C.IsKeyDown(C.int(key)))
+}
+
 func GetScreenWidth() int32 {
 	return int32(C.GetScreenWidth())
 }
