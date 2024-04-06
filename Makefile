@@ -12,8 +12,10 @@ shapes_basic_shapes: ./src/examples/shapes/shapes_basic_shapes/shapes_basic_shap
 shapes_collision_area: ./src/examples/shapes/shapes_collision_area/shapes_collision_area.go c_raylib
 	go build -o ./bin/examples/shapes/shapes_collision_area ./src/examples/shapes/shapes_collision_area/shapes_collision_area.go
 
+shapes_colors_palette: ./src/examples/shapes/shapes_colors_palette/shapes_colors_palette.go c_raylib
+	go build -o ./bin/examples/shapes/shapes_colors_palette ./src/examples/shapes/shapes_colors_palette/shapes_colors_palette.go
 
-shapes: shapes_rectangle_scaling shapes_basic_shapes shapes_bouncing_ball shapes_collision_area
+shapes: shapes_rectangle_scaling shapes_basic_shapes shapes_bouncing_ball shapes_collision_area shapes_colors_palette
 
 c_raylib: $(shell find raylib/src -type f \( -iname \*.c -o -iname \*.h \))
 	cd ./raylib/src ;\
