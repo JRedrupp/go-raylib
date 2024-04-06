@@ -1,6 +1,6 @@
 package main
 
-import "github.com/JRedrupp/go-raylib/src/raylib"
+import "github.com/JRedrupp/go-raylib/src/bindings/raylib"
 
 const MOUSE_SCALE_MARK_SIZE int = 12
 

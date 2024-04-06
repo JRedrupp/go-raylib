@@ -1,8 +1,8 @@
 package raylib
 
 /*
-#cgo CFLAGS: -g -I../../raylib/src
-#cgo LDFLAGS: -L../../raylib/src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+#cgo CFLAGS: -g -I../../../raylib/src
+#cgo LDFLAGS: -L../../../raylib/src -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 #include <stdlib.h>
 #include "raylib.h"
 */
@@ -51,7 +51,7 @@ func GetMousePosition() Vector2 {
 }
 
 func CheckCollisionPointRec(point Vector2, rec Rectangle) bool {
-	return bool(C.CheckCollisionPointRec(point.c(), rec.c()))
+	return bool(C.CheckCollisionPointRec(point.c(), rec.C()))
 }
 
 type Rectangle struct {
@@ -61,7 +61,7 @@ type Rectangle struct {
 	Height float32
 }
 
-func (r Rectangle) c() C.struct_Rectangle {
+func (r Rectangle) C() C.struct_Rectangle {
 	return C.struct_Rectangle{C.float(r.X), C.float(r.Y), C.float(r.Width), C.float(r.Height)}
 }
 
@@ -77,12 +77,12 @@ func GetMouseY() int32 {
 
 // RLAPI bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                           // Check collision between two rectangles
 func CheckCollisionRecs(rec1 Rectangle, rec2 Rectangle) bool {
-	return bool(C.CheckCollisionRecs(rec1.c(), rec2.c()))
+	return bool(C.CheckCollisionRecs(rec1.C(), rec2.C()))
 }
 
 // RLAPI Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2);                                         // Get collision rectangle for two rectangles collision
 func GetCollisionRec(rec1 Rectangle, rec2 Rectangle) Rectangle {
-	rec := C.GetCollisionRec(rec1.c(), rec2.c())
+	rec := C.GetCollisionRec(rec1.C(), rec2.C())
 	return Rectangle{float32(rec.x), float32(rec.y), float32(rec.width), float32(rec.height)}
 }
 
@@ -302,6 +302,16 @@ func DrawCircleLines(centerX int32, centerY int32, radius float32, color Color) 
 	C.DrawCircleLines(C.int(centerX), C.int(centerY), C.float(radius), color.c())
 }
 
+// RLAPI void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);      // Draw a piece of a circle
+func DrawCircleSector(center Vector2, radius float32, startAngle float32, endAngle float32, segments int32, color Color) {
+	C.DrawCircleSector(center.c(), C.float(radius), C.float(startAngle), C.float(endAngle), C.int(segments), color.c())
+}
+
+// RLAPI void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color); // Draw circle sector outline
+func DrawCircleSectorLines(center Vector2, radius float32, startAngle float32, endAngle float32, segments int32, color Color) {
+	C.DrawCircleSectorLines(center.c(), C.float(radius), C.float(startAngle), C.float(endAngle), C.int(segments), color.c())
+}
+
 func GetScreenHeight() int32 {
 	return int32(C.GetScreenHeight())
 }
@@ -358,11 +368,11 @@ func DrawLine(startPosX int32, startPosY int32, endPosX int32, endPosY int32, co
 }
 
 func DrawRectangleRec(rec Rectangle, color Color) {
-	C.DrawRectangleRec(rec.c(), color.c())
+	C.DrawRectangleRec(rec.C(), color.c())
 }
 
 func DrawRectangleLinesEx(rec Rectangle, lineThick float32, color Color) {
-	C.DrawRectangleLinesEx(rec.c(), C.float(lineThick), color.c())
+	C.DrawRectangleLinesEx(rec.C(), C.float(lineThick), color.c())
 }
 
 func DrawTriangle(v1 Vector2, v2 Vector2, v3 Vector2, color Color) {

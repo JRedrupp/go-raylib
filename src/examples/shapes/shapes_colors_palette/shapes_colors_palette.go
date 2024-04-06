@@ -1,6 +1,6 @@
 package main
 
-import "github.com/JRedrupp/go-raylib/src/raylib"
+import "github.com/JRedrupp/go-raylib/src/bindings/raylib"
 
 const MAX_COLORS_COUNT int = 21
 
