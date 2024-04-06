@@ -394,34 +394,39 @@ func (c Color) c() C.struct_Color {
 	return C.struct_Color{C.uchar(c.r), C.uchar(c.g), C.uchar(c.b), C.uchar(c.a)}
 }
 
+// Func to convert from C Color to Go Color
+func ColorFromC(c C.struct_Color) Color {
+	return Color{r: uint8(c.r), g: uint8(c.g), b: uint8(c.b), a: uint8(c.a)}
+}
+
 // Raylib Colors
 var (
-	LIGHTGRAY  = Color{r: 200, g: 200, b: 200, a: 255} // Light Gray
-	GRAY       = Color{r: 130, g: 130, b: 130, a: 255} // Gray
-	DARKGRAY   = Color{r: 80, g: 80, b: 80, a: 255}    // Dark Gray
-	YELLOW     = Color{r: 253, g: 249, b: 0, a: 255}   // Yellow
-	GOLD       = Color{r: 255, g: 203, b: 0, a: 255}   // Gold
-	ORANGE     = Color{r: 255, g: 161, b: 0, a: 255}   // Orange
-	PINK       = Color{r: 255, g: 109, b: 194, a: 255} // Pink
-	RED        = Color{r: 230, g: 41, b: 55, a: 255}   // Red
-	MAROON     = Color{r: 190, g: 33, b: 55, a: 255}   // Maroon
-	GREEN      = Color{r: 0, g: 228, b: 48, a: 255}    // Green
-	LIME       = Color{r: 0, g: 158, b: 47, a: 255}    // Lime
-	DARKGREEN  = Color{r: 0, g: 117, b: 44, a: 255}    // Dark Green
-	SKYBLUE    = Color{r: 102, g: 191, b: 255, a: 255} // Sky Blue
-	BLUE       = Color{r: 0, g: 121, b: 241, a: 255}   // Blue
-	DARKBLUE   = Color{r: 0, g: 82, b: 172, a: 255}    // Dark Blue
-	PURPLE     = Color{r: 200, g: 122, b: 255, a: 255} // Purple
-	VIOLET     = Color{r: 135, g: 60, b: 190, a: 255}  // Violet
-	DARKPURPLE = Color{r: 112, g: 31, b: 126, a: 255}  // Dark Purple
-	BEIGE      = Color{r: 211, g: 176, b: 131, a: 255} // Beige
-	BROWN      = Color{r: 127, g: 106, b: 79, a: 255}  // Brown
-	DARKBROWN  = Color{r: 76, g: 63, b: 47, a: 255}    // Dark Brown
-	WHITE      = Color{r: 255, g: 255, b: 255, a: 255} // White
-	BLACK      = Color{r: 0, g: 0, b: 0, a: 255}       // Black
-	BLANK      = Color{r: 0, g: 0, b: 0, a: 0}         // Blank (Transparent)
-	MAGENTA    = Color{r: 255, g: 0, b: 255, a: 255}   // Magenta
-	RAYWHITE   = Color{r: 245, g: 245, b: 245, a: 255} // My own White (raylib logo)
+	LIGHTGRAY  = ColorFromC(C.LIGHTGRAY)  // Light Gray
+	GRAY       = ColorFromC(C.GRAY)       // Gray
+	DARKGRAY   = ColorFromC(C.DARKGRAY)   // Dark Gray
+	YELLOW     = ColorFromC(C.YELLOW)     // Yellow
+	GOLD       = ColorFromC(C.GOLD)       // Gold
+	ORANGE     = ColorFromC(C.ORANGE)     // Orange
+	PINK       = ColorFromC(C.PINK)       // Pink
+	RED        = ColorFromC(C.RED)        // Red
+	MAROON     = ColorFromC(C.MAROON)     // Maroon
+	GREEN      = ColorFromC(C.GREEN)      // Green
+	LIME       = ColorFromC(C.LIME)       // Lime
+	DARKGREEN  = ColorFromC(C.DARKGREEN)  // Dark Green
+	SKYBLUE    = ColorFromC(C.SKYBLUE)    // Sky Blue
+	BLUE       = ColorFromC(C.BLUE)       // Blue
+	DARKBLUE   = ColorFromC(C.DARKBLUE)   // Dark Blue
+	PURPLE     = ColorFromC(C.PURPLE)     // Purple
+	VIOLET     = ColorFromC(C.VIOLET)     // Violet
+	DARKPURPLE = ColorFromC(C.DARKPURPLE) // Dark Purple
+	BEIGE      = ColorFromC(C.BEIGE)      // Beige
+	BROWN      = ColorFromC(C.BROWN)      // Brown
+	DARKBROWN  = ColorFromC(C.DARKBROWN)  // Dark Brown
+	WHITE      = ColorFromC(C.WHITE)      // White
+	BLACK      = ColorFromC(C.BLACK)      // Black
+	BLANK      = ColorFromC(C.BLANK)      // Blank (Transparent)
+	MAGENTA    = ColorFromC(C.MAGENTA)    // Magenta
+	RAYWHITE   = ColorFromC(C.RAYWHITE)   // My own White (raylib logo)
 )
 
 // ClearBackground - Clear background with color
