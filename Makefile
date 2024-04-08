@@ -18,8 +18,11 @@ shapes_colors_palette: ./src/examples/shapes/shapes_colors_palette/shapes_colors
 shapes_draw_circle_sector: ./src/examples/shapes/shapes_draw_circle_sector/shapes_draw_circle_sector.go c_raylib
 	go build -o ./bin/examples/shapes/shapes_draw_circle_sector ./src/examples/shapes/shapes_draw_circle_sector/shapes_draw_circle_sector.go
 
+shapes_draw_rectangle_rounded: ./src/examples/shapes/shapes_draw_rectangle_rounded/shapes_draw_rectangle_rounded.go c_raylib
+	go build -o ./bin/examples/shapes/shapes_draw_rectangle_rounded ./src/examples/shapes/shapes_draw_rectangle_rounded/shapes_draw_rectangle_rounded.go
 
-shapes: shapes_rectangle_scaling shapes_basic_shapes shapes_bouncing_ball shapes_collision_area shapes_colors_palette shapes_draw_circle_sector
+
+shapes: shapes_rectangle_scaling shapes_basic_shapes shapes_bouncing_ball shapes_collision_area shapes_colors_palette shapes_draw_circle_sector shapes_draw_rectangle_rounded
 
 c_raylib: $(shell find raylib/src -type f \( -iname \*.c -o -iname \*.h \))
 	cd ./raylib/src ;\
