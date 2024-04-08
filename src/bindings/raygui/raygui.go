@@ -35,3 +35,20 @@ func GuiSliderBar(bounds raylib.Rectangle, textLeft string, textRight string, va
 
 	return int(C.GuiSliderBar(cBounds, cTextLeft, cTextRight, cValue, cMinValue, cMaxValue))
 }
+
+// RAYGUIAPI int GuiCheckBox(Rectangle bounds, const char *text, bool *checked);                          // Check Box control, returns true when active
+func GuiCheckBox(bounds raylib.Rectangle, text string, checked *bool) int {
+
+	cText := C.CString(text)
+	defer C.free(unsafe.Pointer(cText))
+	cChecked := (*C.bool)(unsafe.Pointer(checked))
+
+	// TODO: Work out how we can use the .C() method on the raylib.Rectangle struct
+	cBounds := C.struct_Rectangle{
+		x:      (C.float)(bounds.X),
+		y:      (C.float)(bounds.Y),
+		width:  (C.float)(bounds.Width),
+		height: (C.float)(bounds.Height),
+	}
+	return int(C.GuiCheckBox(cBounds, cText, cChecked))
+}
