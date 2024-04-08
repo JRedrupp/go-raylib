@@ -375,6 +375,16 @@ func DrawRectangleLinesEx(rec Rectangle, lineThick float32, color Color) {
 	C.DrawRectangleLinesEx(rec.C(), C.float(lineThick), color.c())
 }
 
+// RLAPI void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // Draw rectangle with rounded edges
+func DrawRectangleRounded(rec Rectangle, roundness float32, segments int32, color Color) {
+	C.DrawRectangleRounded(rec.C(), C.float(roundness), C.int(segments), color.c())
+}
+
+// RLAPI void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, float lineThick, Color color); // Draw rectangle with rounded edges outline
+func DrawRectangleRoundedLines(rec Rectangle, roundness float32, segments int32, lineThick float32, color Color) {
+	C.DrawRectangleRoundedLines(rec.C(), C.float(roundness), C.int(segments), C.float(lineThick), color.c())
+}
+
 func DrawTriangle(v1 Vector2, v2 Vector2, v3 Vector2, color Color) {
 	C.DrawTriangle(v1.c(), v2.c(), v3.c(), color.c())
 }
