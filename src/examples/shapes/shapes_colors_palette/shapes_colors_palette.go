@@ -1,6 +1,9 @@
 package main
 
-import "github.com/JRedrupp/go-raylib/src/bindings/raylib"
+import (
+	"github.com/JRedrupp/go-raylib/src/bindings/model"
+	"github.com/JRedrupp/go-raylib/src/bindings/raylib"
+)
 
 const MAX_COLORS_COUNT int = 21
 
@@ -24,7 +27,7 @@ func main() {
 		"LIGHTGRAY", "PINK", "YELLOW", "GREEN", "SKYBLUE", "PURPLE", "BEIGE",
 	}
 
-	colorsRecs := [MAX_COLORS_COUNT]raylib.Rectangle{} // Rectangles array
+	colorsRecs := [MAX_COLORS_COUNT]model.Rectangle{} // Rectangles array
 
 	// Fills colorsRecs data (for every rectangle)
 	for i := 0; i < MAX_COLORS_COUNT; i++ {

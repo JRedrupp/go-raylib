@@ -1,6 +1,9 @@
 package main
 
-import "github.com/JRedrupp/go-raylib/src/bindings/raylib"
+import (
+	"github.com/JRedrupp/go-raylib/src/bindings/model"
+	"github.com/JRedrupp/go-raylib/src/bindings/raylib"
+)
 
 const MOUSE_SCALE_MARK_SIZE int = 12
 
@@ -16,7 +19,7 @@ func main() {
 
 	raylib.InitWindow(screenWidth, screenHeight, "go-raylib [shapes] example - rectangle scaling mouse")
 
-	rec := raylib.Rectangle{X: 100, Y: 100, Width: 200, Height: 80}
+	rec := model.Rectangle{X: 100, Y: 100, Width: 200, Height: 80}
 
 	var mousePosition = raylib.Vector2{X: 0, Y: 0}
 
@@ -32,7 +35,7 @@ func main() {
 		//----------------------------------------------------------------------------------
 		mousePosition = raylib.GetMousePosition()
 
-		if (raylib.CheckCollisionPointRec(mousePosition, raylib.Rectangle{X: rec.X + rec.Width - float32(MOUSE_SCALE_MARK_SIZE), Y: rec.Y + rec.Height - float32(MOUSE_SCALE_MARK_SIZE), Width: float32(MOUSE_SCALE_MARK_SIZE), Height: float32(MOUSE_SCALE_MARK_SIZE)})) {
+		if (raylib.CheckCollisionPointRec(mousePosition, model.Rectangle{X: rec.X + rec.Width - float32(MOUSE_SCALE_MARK_SIZE), Y: rec.Y + rec.Height - float32(MOUSE_SCALE_MARK_SIZE), Width: float32(MOUSE_SCALE_MARK_SIZE), Height: float32(MOUSE_SCALE_MARK_SIZE)})) {
 			mouseScaleReady = true
 			if raylib.IsMouseButtonPressed(raylib.MOUSE_BUTTON_LEFT) {
 				mouseScaleMode = true

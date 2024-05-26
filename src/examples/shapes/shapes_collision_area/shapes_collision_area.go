@@ -1,6 +1,9 @@
 package main
 
-import "github.com/JRedrupp/go-raylib/src/bindings/raylib"
+import (
+	"github.com/JRedrupp/go-raylib/src/bindings/model"
+	"github.com/JRedrupp/go-raylib/src/bindings/raylib"
+)
 
 func main() {
 	// Initialization
@@ -11,13 +14,13 @@ func main() {
 	raylib.InitWindow(screenWidth, screenHeight, "raylib [shapes] example - collision area")
 
 	// Box A: Moving box
-	boxA := raylib.Rectangle{X: 10, Y: float32(raylib.GetScreenHeight()/2.0 - 50), Width: 200, Height: 100}
+	boxA := model.Rectangle{X: 10, Y: float32(raylib.GetScreenHeight()/2.0 - 50), Width: 200, Height: 100}
 	boxASpeedX := 4
 
 	// Box B: Mouse moved box
-	boxB := raylib.Rectangle{X: float32(raylib.GetScreenWidth()/2.0 - 30), Y: float32(raylib.GetScreenHeight()/2.0 - 30), Width: 60, Height: 60}
+	boxB := model.Rectangle{X: float32(raylib.GetScreenWidth()/2.0 - 30), Y: float32(raylib.GetScreenHeight()/2.0 - 30), Width: 60, Height: 60}
 
-	boxCollision := raylib.Rectangle{X: 0, Y: 0, Width: 0, Height: 0} // Collision raylib.rectangle
+	boxCollision := model.Rectangle{X: 0, Y: 0, Width: 0, Height: 0} // Collision model.Rectangle
 
 	screenUpperLimit := int32(40) // Top menu limits
 
@@ -61,7 +64,7 @@ func main() {
 		// Check boxes collision
 		collision = raylib.CheckCollisionRecs(boxA, boxB)
 
-		// Get collision raylib.rectangle (only on collision)
+		// Get collision model.Rectangle (only on collision)
 		if collision {
 			boxCollision = raylib.GetCollisionRec(boxA, boxB)
 		}

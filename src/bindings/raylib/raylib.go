@@ -10,7 +10,13 @@ import "C"
 import (
 	"fmt"
 	"unsafe"
+
+	"github.com/JRedrupp/go-raylib/src/bindings/model"
 )
+
+func rect_to_c(r model.Rectangle) C.Rectangle {
+	return C.Rectangle{C.float(r.X), C.float(r.Y), C.float(r.Width), C.float(r.Height)}
+}
 
 // InitWindow - Initialize window and OpenGL context
 func InitWindow(width int32, height int32, title string) {
@@ -50,19 +56,13 @@ func GetMousePosition() Vector2 {
 	return Vector2{float32(pos.x), float32(pos.y)}
 }
 
-func CheckCollisionPointRec(point Vector2, rec Rectangle) bool {
-	return bool(C.CheckCollisionPointRec(point.c(), rec.C()))
+func CheckCollisionPointRec(point Vector2, rec model.Rectangle) bool {
+	return bool(C.CheckCollisionPointRec(point.c(), rect_to_c(rec)))
 }
 
-type Rectangle struct {
-	X      float32
-	Y      float32
-	Width  float32
-	Height float32
-}
-
-func (r Rectangle) C() C.struct_Rectangle {
-	return C.struct_Rectangle{C.float(r.X), C.float(r.Y), C.float(r.Width), C.float(r.Height)}
+// RLAPI bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius);                       // Check if point is inside circle
+func CheckCollisionPointCircle(point Vector2, center Vector2, radius float32) bool {
+	return bool(C.CheckCollisionPointCircle(point.c(), center.c(), C.float(radius)))
 }
 
 // RLAPI int GetMouseX(void);                                    // Get mouse position X
@@ -75,15 +75,15 @@ func GetMouseY() int32 {
 	return int32(C.GetMouseY())
 }
 
-// RLAPI bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                           // Check collision between two rectangles
-func CheckCollisionRecs(rec1 Rectangle, rec2 Rectangle) bool {
-	return bool(C.CheckCollisionRecs(rec1.C(), rec2.C()))
+// RLAPI bool CheckCollisionRecs(Rectangle rec1, model.Rectangle rec2);                                           // Check collision between two model.Rectangles
+func CheckCollisionRecs(rec1 model.Rectangle, rec2 model.Rectangle) bool {
+	return bool(C.CheckCollisionRecs(rect_to_c(rec1), rect_to_c(rec2)))
 }
 
-// RLAPI Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2);                                         // Get collision rectangle for two rectangles collision
-func GetCollisionRec(rec1 Rectangle, rec2 Rectangle) Rectangle {
-	rec := C.GetCollisionRec(rec1.C(), rec2.C())
-	return Rectangle{float32(rec.x), float32(rec.y), float32(rec.width), float32(rec.height)}
+// RLAPI model.Rectangle GetCollisionRec(Rectangle rec1, model.Rectangle rec2);                                         // Get collision model.Rectangle for two model.Rectangles collision
+func GetCollisionRec(rec1 model.Rectangle, rec2 model.Rectangle) model.Rectangle {
+	rec := C.GetCollisionRec(rect_to_c(rec1), rect_to_c(rec2))
+	return model.Rectangle{X: float32(rec.x), Y: float32(rec.y), Width: float32(rec.width), Height: float32(rec.height)}
 }
 
 // RLAPI int MeasureText(const char *text, int fontSize);                                      // Measure string width for default font
@@ -92,6 +92,14 @@ func MeasureText(text string, fontSize int32) int32 {
 	defer C.free(unsafe.Pointer(cText))
 
 	return int32(C.MeasureText(cText, C.int(fontSize)))
+}
+
+// RLAPI const char *TextSubtext(const char *text, int position, int length);                  // Get a piece of a text string
+func TextSubtext(text string, position int32, length int32) string {
+	cText := C.CString(text)
+	defer C.free(unsafe.Pointer(cText))
+
+	return C.GoString(C.TextSubtext(cText, C.int(position), C.int(length)))
 }
 
 // RLAPI const char *TextFormat(const char *text, ...);                                        // Text formatting with variables (sprintf() style)
@@ -142,6 +150,11 @@ const (
 
 func IsMouseButtonPressed(button Button) bool {
 	return bool(C.IsMouseButtonPressed(C.int(button)))
+}
+
+// RLAPI bool IsMouseButtonDown(int button);                     // Check if a mouse button is being pressed
+func IsMouseButtonDown(button Button) bool {
+	return bool(C.IsMouseButtonDown(C.int(button)))
 }
 
 type KeyboardKey int
@@ -327,17 +340,22 @@ func DrawText(text string, x int32, y int32, fontSize int32, color Color) {
 	C.DrawText(cText, C.int(x), C.int(y), C.int(fontSize), color.c())
 }
 
-// void DrawRectangle(int posX, int posY, int width, int height, Color color);                        // Draw a color-filled rectangle
+// void DrawRectangle(int posX, int posY, int width, int height, Color color);                        // Draw a color-filled model.Rectangle
 func DrawRectangle(posX int32, posY int32, width int32, height int32, color Color) {
 	C.DrawRectangle(C.int(posX), C.int(posY), C.int(width), C.int(height), color.c())
 }
 
-// void DrawRectangleGradientH(int posX, int posY, int width, int height, Color color1, Color color2);// Draw a horizontal-gradient-filled rectangle
+// RLAPI void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color);                 // Draw a color-filled rectangle with pro parameters
+func DrawRectanglePro(rec model.Rectangle, origin Vector2, rotation float32, color Color) {
+	C.DrawRectanglePro(rect_to_c(rec), origin.c(), C.float(rotation), color.c())
+}
+
+// void DrawRectangleGradientH(int posX, int posY, int width, int height, Color color1, Color color2);// Draw a horizontal-gradient-filled model.Rectangle
 func DrawRectangleGradientH(posX int32, posY int32, width int32, height int32, color1 Color, color2 Color) {
 	C.DrawRectangleGradientH(C.int(posX), C.int(posY), C.int(width), C.int(height), color1.c(), color2.c())
 }
 
-// RLAPI void DrawRectangleLines(int posX, int posY, int width, int height, Color color);                   // Draw rectangle outline
+// RLAPI void DrawRectangleLines(int posX, int posY, int width, int height, Color color);                   // Draw model.Rectangle outline
 func DrawRectangleLines(posX int32, posY int32, width int32, height int32, color Color) {
 	C.DrawRectangleLines(C.int(posX), C.int(posY), C.int(width), C.int(height), color.c())
 }
@@ -367,26 +385,41 @@ func DrawLine(startPosX int32, startPosY int32, endPosX int32, endPosY int32, co
 	C.DrawLine(C.int(startPosX), C.int(startPosY), C.int(endPosX), C.int(endPosY), color.c())
 }
 
-func DrawRectangleRec(rec Rectangle, color Color) {
-	C.DrawRectangleRec(rec.C(), color.c())
+// RLAPI void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);                   // Draw line segment cubic-bezier in-out interpolation
+func DrawLineBezier(startPos Vector2, endPos Vector2, thick float32, color Color) {
+	C.DrawLineBezier(startPos.c(), endPos.c(), C.float(thick), color.c())
 }
 
-func DrawRectangleLinesEx(rec Rectangle, lineThick float32, color Color) {
-	C.DrawRectangleLinesEx(rec.C(), C.float(lineThick), color.c())
+func DrawRectangleRec(rec model.Rectangle, color Color) {
+	C.DrawRectangleRec(rect_to_c(rec), color.c())
 }
 
-// RLAPI void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // Draw rectangle with rounded edges
-func DrawRectangleRounded(rec Rectangle, roundness float32, segments int32, color Color) {
-	C.DrawRectangleRounded(rec.C(), C.float(roundness), C.int(segments), color.c())
+func DrawRectangleLinesEx(rec model.Rectangle, lineThick float32, color Color) {
+	C.DrawRectangleLinesEx(rect_to_c(rec), C.float(lineThick), color.c())
 }
 
-// RLAPI void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, float lineThick, Color color); // Draw rectangle with rounded edges outline
-func DrawRectangleRoundedLines(rec Rectangle, roundness float32, segments int32, lineThick float32, color Color) {
-	C.DrawRectangleRoundedLines(rec.C(), C.float(roundness), C.int(segments), C.float(lineThick), color.c())
+// RLAPI void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // Draw model.Rectangle with rounded edges
+func DrawRectangleRounded(rec model.Rectangle, roundness float32, segments int32, color Color) {
+	C.DrawRectangleRounded(rect_to_c(rec), C.float(roundness), C.int(segments), color.c())
+}
+
+// RLAPI void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, Color color);         // Draw rectangle lines with rounded edges
+func DrawRectangleRoundedLines(rec model.Rectangle, roundness float32, segments int32, color Color) {
+	C.DrawRectangleRoundedLines(rect_to_c(rec), C.float(roundness), C.int(segments), color.c())
 }
 
 func DrawTriangle(v1 Vector2, v2 Vector2, v3 Vector2, color Color) {
 	C.DrawTriangle(v1.c(), v2.c(), v3.c(), color.c())
+}
+
+// RLAPI void DrawRing(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color); // Draw ring
+func DrawRing(center Vector2, innerRadius float32, outerRadius float32, startAngle float32, endAngle float32, segments int32, color Color) {
+	C.DrawRing(center.c(), C.float(innerRadius), C.float(outerRadius), C.float(startAngle), C.float(endAngle), C.int(segments), color.c())
+}
+
+// RLAPI void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color);    // Draw ring outline
+func DrawRingLines(center Vector2, innerRadius float32, outerRadius float32, startAngle float32, endAngle float32, segments int32, color Color) {
+	C.DrawRingLines(center.c(), C.float(innerRadius), C.float(outerRadius), C.float(startAngle), C.float(endAngle), C.int(segments), color.c())
 }
 
 // Easy enough to do internally

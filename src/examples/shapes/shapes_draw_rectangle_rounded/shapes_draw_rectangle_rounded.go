@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/JRedrupp/go-raylib/src/bindings/model"
 	"github.com/JRedrupp/go-raylib/src/bindings/raygui"
 	"github.com/JRedrupp/go-raylib/src/bindings/raylib"
 )
@@ -33,7 +34,7 @@ func main() {
 		// Update
 		//----------------------------------------------------------------------------------
 
-		var rec = raylib.Rectangle{X: ((float32)(raylib.GetScreenWidth()) - width - 250) / 2, Y: (float32(raylib.GetScreenHeight()) - height) / 2.0, Width: (float32)(width), Height: (float32)(height)}
+		var rec = model.Rectangle{X: ((float32)(raylib.GetScreenWidth()) - width - 250) / 2, Y: (float32(raylib.GetScreenHeight()) - height) / 2.0, Width: (float32)(width), Height: (float32)(height)}
 		//----------------------------------------------------------------------------------
 		if raylib.IsKeyDown(raylib.KEY_A) {
 			fmt.Println("X:", rec.X, "Y:", rec.Y, "Width:", rec.Width, "Height:", rec.Height)
@@ -54,20 +55,20 @@ func main() {
 			raylib.DrawRectangleRounded(rec, roundness, (int32)(segments), raylib.Fade(raylib.MAROON, 0.2))
 		}
 		if drawRoundedLines {
-			raylib.DrawRectangleRoundedLines(rec, roundness, (int32)(segments), lineThick, raylib.Fade(raylib.MAROON, 0.4))
+			raylib.DrawRectangleRoundedLines(rec, roundness, (int32)(segments), raylib.Fade(raylib.MAROON, 0.4))
 		}
 
 		// Draw GUI controls
 		//------------------------------------------------------------------------------
-		raygui.GuiSliderBar(raylib.Rectangle{X: 640, Y: 40, Width: 105, Height: 20}, "Width", "", &width, 0, (float32)(raylib.GetScreenWidth()-300))
-		raygui.GuiSliderBar(raylib.Rectangle{X: 640, Y: 70, Width: 105, Height: 20}, "Height", "", &height, 0, (float32)(raylib.GetScreenHeight()-50))
-		raygui.GuiSliderBar(raylib.Rectangle{X: 640, Y: 140, Width: 105, Height: 20}, "Roundness", "", &roundness, 0.0, 1.0)
-		raygui.GuiSliderBar(raylib.Rectangle{X: 640, Y: 170, Width: 105, Height: 20}, "Thickness", "", &lineThick, 0, 20)
-		raygui.GuiSliderBar(raylib.Rectangle{X: 640, Y: 240, Width: 105, Height: 20}, "Segments", "", &segments, 0, 60)
+		raygui.GuiSliderBar(model.Rectangle{X: 640, Y: 40, Width: 105, Height: 20}, "Width", "", &width, 0, (float32)(raylib.GetScreenWidth()-300))
+		raygui.GuiSliderBar(model.Rectangle{X: 640, Y: 70, Width: 105, Height: 20}, "Height", "", &height, 0, (float32)(raylib.GetScreenHeight()-50))
+		raygui.GuiSliderBar(model.Rectangle{X: 640, Y: 140, Width: 105, Height: 20}, "Roundness", "", &roundness, 0.0, 1.0)
+		raygui.GuiSliderBar(model.Rectangle{X: 640, Y: 170, Width: 105, Height: 20}, "Thickness", "", &lineThick, 0, 20)
+		raygui.GuiSliderBar(model.Rectangle{X: 640, Y: 240, Width: 105, Height: 20}, "Segments", "", &segments, 0, 60)
 
-		raygui.GuiCheckBox(raylib.Rectangle{X: 640, Y: 320, Width: 20, Height: 20}, "DrawRoundedRect", &drawRoundedRect)
-		raygui.GuiCheckBox(raylib.Rectangle{X: 640, Y: 350, Width: 20, Height: 20}, "DrawRoundedLines", &drawRoundedLines)
-		raygui.GuiCheckBox(raylib.Rectangle{X: 640, Y: 380, Width: 20, Height: 20}, "DrawRect", &drawRect)
+		raygui.GuiCheckBox(model.Rectangle{X: 640, Y: 320, Width: 20, Height: 20}, "DrawRoundedRect", &drawRoundedRect)
+		raygui.GuiCheckBox(model.Rectangle{X: 640, Y: 350, Width: 20, Height: 20}, "DrawRoundedLines", &drawRoundedLines)
+		raygui.GuiCheckBox(model.Rectangle{X: 640, Y: 380, Width: 20, Height: 20}, "DrawRect", &drawRect)
 		//------------------------------------------------------------------------------
 		mode := "AUTO"
 		col := raylib.DARKGRAY

@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 
+	"github.com/JRedrupp/go-raylib/src/bindings/model"
 	"github.com/JRedrupp/go-raylib/src/bindings/raygui"
 	"github.com/JRedrupp/go-raylib/src/bindings/raylib"
 )
@@ -47,11 +48,11 @@ func main() {
 
 		// Draw GUI controls
 		//------------------------------------------------------------------------------
-		raygui.GuiSliderBar(raylib.Rectangle{X: 600, Y: 40, Width: 120, Height: 20}, "StartAngle", "", &startAngle, 0, 720)
-		raygui.GuiSliderBar(raylib.Rectangle{X: 600, Y: 70, Width: 120, Height: 20}, "EndAngle", "", &endAngle, 0, 720)
+		raygui.GuiSliderBar(model.Rectangle{X: 600, Y: 40, Width: 120, Height: 20}, "StartAngle", "", &startAngle, 0, 720)
+		raygui.GuiSliderBar(model.Rectangle{X: 600, Y: 70, Width: 120, Height: 20}, "EndAngle", "", &endAngle, 0, 720)
 
-		raygui.GuiSliderBar(raylib.Rectangle{X: 600, Y: 140, Width: 120, Height: 20}, "Radius", "", &outerRadius, 0, 200)
-		raygui.GuiSliderBar(raylib.Rectangle{X: 600, Y: 170, Width: 120, Height: 20}, "Segments", "", &segments, 0, 100)
+		raygui.GuiSliderBar(model.Rectangle{X: 600, Y: 140, Width: 120, Height: 20}, "Radius", "", &outerRadius, 0, 200)
+		raygui.GuiSliderBar(model.Rectangle{X: 600, Y: 170, Width: 120, Height: 20}, "Segments", "", &segments, 0, 100)
 		//------------------------------------------------------------------------------
 
 		minSegments = float32(math.Trunc(math.Ceil(float64((endAngle - startAngle) / 90))))
